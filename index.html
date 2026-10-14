@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Astros Group Sales Plan</title>
+  <link rel="icon" href="assets/gscg_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #15213D; --red: #E4002B; --red-ink: #B0001F; --cream: #F6F4EF; --white: #FFFFFF;
+      --ink: #15213D; --ink-2: #4A5468; --muted: #8A93A6; --line: #DDD8CD; --soft: #ECE9E1;
+      --s2: #1F5FA8; --s3: #1E7A4C; --s4: #C2410C; --s5: #7B3FA0; --s6: #B8860B;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 16px/1.6 Inter, system-ui, sans-serif; }
+    a { color: inherit; }
+    .bar { position: fixed; left: 0; top: 0; bottom: 0; width: 10px; background: var(--red); }
+    header { background: var(--navy); color: var(--cream); }
+    .wrap { width: min(1080px, 100% - 40px); margin: 0 auto; }
+    .top { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .top a.home { text-decoration: none; font-family: Poppins; font-weight: 700; display: flex; gap: 10px; align-items: center; }
+    .top img { height: 34px; }
+    .tag { font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #C8CEDA; }
+    main { padding: 40px 0 80px; }
+    h1, h2, h3 { font-family: Poppins, Inter, sans-serif; line-height: 1.15; margin: 0 0 .4em; }
+    h1 { font-size: clamp(2rem, 4.5vw, 3rem); }
+    h2 { font-size: 1.6rem; margin-top: 1.6em; }
+    h3 { font-size: 1.1rem; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+    .lede { font-size: 1.1rem; color: var(--ink-2); max-width: 70ch; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+    .goal { background: var(--navy); color: var(--cream); border-radius: 16px; padding: 30px; margin: 22px 0; border-top: 8px solid var(--red); }
+    .goal h1 { color: var(--cream); margin: 0; }
+    .goal .eyebrow { color: #F0A274; }
+
+    .scope { font-size: 1.08rem; line-height: 1.9; }
+    .hl { padding: 2px 6px; border-radius: 6px; text-decoration: none; font-weight: 600; white-space: normal; }
+    .hl sup { font-size: .7em; font-weight: 800; margin-left: 3px; }
+    .hl.s2 { background: #E3ECF8; color: var(--s2); } .hl.s3 { background: #E3F2EA; color: var(--s3); }
+    .hl.s4 { background: #FCE8DD; color: var(--s4); } .hl.s5 { background: #F1E6F7; color: var(--s5); }
+    .hl.s6 { background: #FAF1D6; color: #8A6500; }
+    .hl:hover { filter: brightness(.95); text-decoration: underline; }
+
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px; }
+    .step { display: block; text-decoration: none; background: var(--white); border: 1px solid var(--line); border-top: 6px solid var(--c, var(--navy)); border-radius: 14px; padding: 18px; min-height: 150px; transition: transform .12s, box-shadow .12s; }
+    .step:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(21,33,61,.08); }
+    .step .n { font-family: Poppins; font-weight: 800; font-size: 2rem; color: var(--c, var(--navy)); line-height: 1; }
+    .step h3 { margin: 10px 0 4px; }
+    .step p { margin: 0; font-size: .88rem; color: var(--ink-2); }
+    .step .wk { display: inline-block; margin-top: 10px; font-size: .75rem; font-weight: 700; padding: 2px 9px; border-radius: 99px; background: var(--soft); color: var(--ink-2); }
+    .step.off { opacity: .45; filter: grayscale(1); pointer-events: none; border-top-color: var(--muted); }
+    .step.off .wk { background: transparent; border: 1px dashed var(--muted); }
+
+    .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0 0; font-size: .9rem; color: var(--ink-2); }
+    .flow b { color: var(--ink); }
+
+    .crumb { font-size: .9rem; margin-bottom: 16px; }
+    .crumb a { color: var(--red-ink); font-weight: 600; text-decoration: none; }
+    .sechead { border-left: 8px solid var(--c); padding-left: 18px; margin-bottom: 18px; }
+    .sechead .n { font-family: Poppins; font-weight: 800; color: var(--c); font-size: 1rem; letter-spacing: .1em; }
+    .pill { display: inline-block; font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: var(--soft); color: var(--ink-2); margin-right: 6px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .placeholder { border: 2px dashed var(--line); border-radius: 14px; padding: 22px; color: var(--muted); background: rgba(255,255,255,.5); }
+    .placeholder b { color: var(--ink-2); }
+    ul { padding-left: 1.2em; margin: .4em 0; } li { margin: .25em 0; }
+    .ties { margin-top: 26px; font-size: .9rem; color: var(--ink-2); }
+    .ties a { font-weight: 600; color: var(--red-ink); }
+    .vp { font-family: Poppins; font-size: 1.15rem; line-height: 1.45; }
+    .muted { color: var(--muted); }
+    .q { font-style: italic; color: var(--ink-2); }
+    .navpn { display: flex; justify-content: space-between; margin-top: 40px; }
+    .navpn a { text-decoration: none; font-weight: 600; color: var(--red-ink); }
+    footer { font-size: .8rem; color: var(--muted); padding: 30px 0; border-top: 1px solid var(--line); }
+    @media (max-width: 860px) { .steps { grid-template-columns: repeat(2, 1fr); } .grid2, .grid3, .grid4 { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="bar"></div>
+  <header>
+    <div class="wrap top">
+      <a class="home" href="#/"><img src="assets/gscg_logo.png" alt="GSCG"> Astros Group Sales Plan</a>
+      <span class="tag">Working framework · Fall 2026</span>
+    </div>
+  </header>
+  <main class="wrap" id="app"></main>
+  <footer class="wrap">GSCG × Houston Astros · Internal working framework, not a client deliverable yet. Sections marked “coming later” will be filled in during Weeks 6–9.</footer>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
