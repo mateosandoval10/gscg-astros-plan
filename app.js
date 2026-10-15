@@ -4,8 +4,19 @@
   const step = id => P.steps.find(s => s.id === id);
   const byN = n => P.steps.find(s => s.n === n);
   const list = items => `<ul>${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`;
+  const T = P.themes;
+  const fitem = ([k, h, t]) => `<div class="fi" style="--tc:${T[k].color}"><b>${esc(h)}</b> ${esc(t)}</div>`;
+  const sgo = obj => Object.entries(obj).map(([title, items]) => {
+    const col = { Strengths: '#1E7A4C', Gaps: '#C8102E', Opportunities: '#B45309' }[title];
+    const groups = Object.keys(T).filter(k => items.some(i => i[0] === k)).map(k =>
+      `<div class="themebar" style="background:${T[k].color}">${esc(T[k].name)}</div>${items.filter(i => i[0] === k).map(fitem).join('')}`).join('');
+    return `<h2 style="color:${col}">${title}</h2><div class="card">${groups}</div>`;
+  }).join('');
+  const legend = () => `<div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0">${Object.values(T).map(t => `<span class="pill" style="background:${t.color};color:#fff">${esc(t.name)}</span>`).join('')}</div>`;
+  const fblock = f => typeof f === 'string' ? `<li>${esc(f)}</li>` : '';
   const findings = (sec, label) => sec.findings && sec.findings.length
-    ? `<div class="card">${list(sec.findings)}</div>`
+    ? (typeof sec.findings[0] === 'string' ? `<div class="card">${list(sec.findings)}</div>`
+      : `<div class="grid2">${sec.findings.map(f => `<div class="card"><h3>${esc(f.h)}</h3>${list(f.items)}</div>`).join('')}</div>`)
     : `<div class="placeholder"><b>${label}</b><br>Key findings will be added here.</div>`;
 
   function home() {
@@ -44,6 +55,13 @@
   }
 
   const views = {
+    situation(sec) {
+      return `<p class="lede">${esc(sec.intro)}</p>
+        <div class="card"><h3>The big picture</h3><ul>${sec.bigPicture.map(([h, t]) => `<li><b>${esc(h)}</b> ${esc(t)}</li>`).join('')}</ul></div>
+        <h2>Strengths, gaps & opportunities</h2>${legend()}<div class="sgo">${sgo(sec.sgo)}</div>
+        <h2>Numbers to remember</h2><div class="card"><table class="numtbl">${sec.numbers.map(([a, b]) => `<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join('')}</table></div>
+        <p class="ties">Sets up → <a href="#/goals">2. Goals</a> · <a href="#/audience">3. Target Audience</a></p>`;
+    },
     goals(sec) {
       return `<p class="lede">${esc(sec.intro)}</p>
         <div class="grid3">${sec.blocks.map(b => `<div class="card"><h3>${esc(b.h)}</h3>${list(b.items)}</div>`).join('')}</div>
@@ -54,7 +72,7 @@
         <div class="card"><h3>${esc(sec.largeGroup.h)}</h3>${list(sec.largeGroup.items)}</div>
         <h2>Audience groups</h2>
         <div class="grid3">${sec.groups.map(g => `<div class="card"><h3>${esc(g.h)}</h3><p class="muted" style="margin:0 0 6px;font-size:.85rem">${esc(g.note)}</p>${list(g.items)}</div>`).join('')}</div>
-        <h2>Week 2 key findings</h2>${findings(sec, 'Week 2: demographic research')}
+        <h2>Demographic research (Week 3)</h2>${findings(sec, 'Demographic research')}
         <p class="ties">Feeds into → <a href="#/value">4. Value Proposition</a> (a value proposition for each group)</p>`;
     },
     value(sec) {
@@ -66,7 +84,13 @@
             <h3>Today</h3><p class="q">${esc(sec.astros.today)}</p>
             <h3>Draft: what it could be</h3><p class="vp">“${esc(sec.astros.draft)}”</p></div>
         </div>
-        <h2>Week 3 value propositions by audience</h2>${findings(sec, 'Week 3: one 2–3 sentence value proposition per audience group')}
+        <h2>Definition</h2><div class="defn"><p>${esc(sec.definition)}</p></div>
+        <div class="grid4" style="margin-top:14px">${sec.parts.map(([h, q], i) => `<div class="card"><div class="eyebrow">${i + 1} · ${esc(h)}</div>${esc(q)}</div>`).join('')}</div>
+        <h2>Week 3 value propositions by audience</h2>
+        ${sec.vps.map(v => { const c = T[v.theme].color; return `<div class="vpcard" style="--tc:${c}"><div class="vphead" style="background:${c}">${esc(v.name)}<span>${esc(v.seg)}</span></div>
+          ${[['Target audience', v.audience], ['Problem', v.problem], ['Offer', v.offer], ['Value', v.value]].map(([l, t]) => `<div class="vprow"><div>${l}</div><div>${esc(t)}</div></div>`).join('')}
+          <div class="vpstmt">“${esc(v.statement)}”</div></div>`; }).join('')}
+        <div class="card"><h3>Watch out for</h3>${list(sec.watch)}</div>
         <p class="ties">Built from → <a href="#/audience">3. Target Audience</a> · Delivered through → <a href="#/mix">5. Marketing Mix</a></p>`;
     },
     mix(sec) {
@@ -78,7 +102,7 @@
     channels(sec) {
       return `<p class="lede">${esc(sec.intro)}</p>
         <div class="grid2">${sec.blocks.map(b => `<div class="card"><h3>${esc(b.h)}</h3>${list(b.items)}</div>`).join('')}</div>
-        <h2>Week 4 key findings</h2>${findings(sec, 'Week 4: outreach methods & automation research')}
+        <h2>Findings so far</h2>${findings(sec, 'Outreach findings')}<div class="placeholder" style="margin-top:16px"><b>Week 4: outreach methods & automation research</b><br>Coming next.</div>
         <p class="ties">Goal it serves → <a href="#/goals">2. Goals & Objectives</a> (more groups, more often)</p>`;
     },
   };
